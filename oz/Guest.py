@@ -490,7 +490,8 @@ class Guest(object):
         # graphics
         if not self.tdl.arch in ["aarch64", "armv7l"]:
             # qemu for arm/aarch64 does not support a graphical console - amazingly
-            self.lxml_subelement(devices, "graphics", None, {'port':'-1', 'type':'vnc'})
+            graphics = self.lxml_subelement(devices, "graphics", None, {'port':'5959', 'listen':'0.0.0.0', 'keymap':'en-us', 'type':'vnc'})
+            self.lxml_subelement(graphics, "listen", None, {'type':'address', 'address':'0.0.0.0'})
         # network
         interface = self.lxml_subelement(devices, "interface", None, {'type':'bridge'})
         self.lxml_subelement(interface, "source", None, {'bridge':self.bridge_name})
